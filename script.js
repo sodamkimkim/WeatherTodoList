@@ -1,6 +1,6 @@
 const todoInput = document.querySelector("#todo-input");
 
-const createToto = function () {
+const createTodo = function () {
   const todoList = document.querySelector("#todo-list");
   const newLi = document.createElement("li");
   const newSpan = document.createElement("span");
@@ -24,10 +24,11 @@ const createToto = function () {
 
   todoList.appendChild(newLi);
   todoInput.value = "";
-}
+};
+
 const keyCodeCheck = function () {
   // console.log(window.event);
   if (window.event.keyCode === 13 && todoInput.value !== "") {
-    createToto();
+    createTodo();
   }
 };

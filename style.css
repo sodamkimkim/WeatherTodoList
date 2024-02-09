@@ -42,8 +42,6 @@ body {
 
 }
 
-#todo-list li>button>span {}
-
 .complete {
     color: rgb(155, 155, 155);
     text-decoration: line-through;
