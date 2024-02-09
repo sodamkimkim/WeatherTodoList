@@ -8,14 +8,16 @@ const createTodo = function () {
   const vSpan = document.createElement("span");
   vSpan.innerText = "V";
 
-
-
   newBtn.addEventListener('click', () => {
     newLi.classList.toggle('complete'); // 클릭할 때 마다 compelete class 붙었다 뗐다 됨.
     if (newBtn.contains(vSpan))
       newBtn.removeChild(vSpan);
     else
       newBtn.appendChild(vSpan);
+  });
+
+  newLi.addEventListener('dblclick', () => {
+    todoList.removeChild(newLi);
   });
 
   newSpan.textContent = todoInput.value;
