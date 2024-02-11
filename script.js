@@ -81,14 +81,37 @@ if (savedTodoList) {
 }
 
 // OpenWeatherMap API
+const weatherDataActive = function ({ location, weather }) {
+  const weatherMainList = [
+    'Clear',
+    'Clouds',
+    'Drizzle',
+    'Haze',
+    'Rain',
+    'Snow',
+    'Thunderstorm'
+  ];
+  weather = weatherMainList.includes(weather) ? weather : 'Clear';
+  const locationNameTag = document.querySelector('#location-name-tag');
+  console.log(locationNameTag);
+  locationNameTag.textContent = location;
+  document.body.style.backgroundImage = `url(images/${weather}.png)`;
+}
+
+
 const weatherSearch = function ({ latitude, longitude }) {
   fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=d00aad183fd60b5b8bae7f45c445edb2`
   ).then((res) => {
     console.log(res);
     return res.json(); // ** body, header가 존재하는 json 받아올 때 .json() 사용! body만 있으면 Json.Parse() 사용해도 됨
   }).then((jsonData) => {
-    console.log(jsonData);
-    console.log(jsonData.name, jsonData.weather[0].main);
+    //  console.log(jsonData);
+    //  console.log(jsonData.name, jsonData.weather[0].main);
+    const weatherData = {
+      location: jsonData.name,
+      weather: jsonData.weather[0].main
+    }
+    weatherDataActive(weatherData);
   }).catch((err) => {
     console.error(err);
   })
