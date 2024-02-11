@@ -81,27 +81,27 @@ if (savedTodoList) {
 }
 
 // OpenWeatherMap API
-const weatherSearch = function (position) {
-  // fetch(`https://api.openweathermap.org/data/3.0/weather?lat={lat}&lon={lon}&appid={API key}`);
-  // console.log(position);
-
-  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=d00aad183fd60b5b8bae7f45c445edb2`
+const weatherSearch = function ({ latitude, longitude }) {
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=d00aad183fd60b5b8bae7f45c445edb2`
   ).then((res) => {
     console.log(res);
     return res.json(); // ** body, header가 존재하는 json 받아올 때 .json() 사용! body만 있으면 Json.Parse() 사용해도 됨
   }).then((jsonData) => {
     console.log(jsonData);
-    console.log(jsonData.name, jsonData.weather[0].description);
+    console.log(jsonData.name, jsonData.weather[0].main);
   }).catch((err) => {
     console.error(err);
   })
 };
 
-const accessToGeo = function (position) {
-  console.log(position);
+const accessToGeo = function ({ coords }) { // ** 구조분해 할당 - position의 coords를 바로 들고온다.
+  const { latitude, longitude } = coords;
+  // console.log(latitude, longitude);
+
+  // 객체의 key와 value가 같다면 하나만 적어도 된다. : # shorthand property
   const positionObj = {
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude
+    latitude,
+    longitude
   }
   weatherSearch(positionObj);
 }
