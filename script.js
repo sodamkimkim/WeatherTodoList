@@ -42,7 +42,7 @@ const completeTodoFn = function (newLi, newBtn) {
 };
 const keyCodeCheck = function () {
   // console.log(window.event);
-  if (window.event.keyCode === 13 && todoInput.value !== "") {
+  if (window.event.keyCode === 13 && todoInput.value.trim() !== "") {
     createTodo();
   }
 };
