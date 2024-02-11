@@ -71,7 +71,7 @@ const saveItemsFn = function () {
 
   saveItems.length === 0 ?
     localStorage.removeItem('saved-items') :
-    localStorage.setItem('saved-items', JSON.stringify(saveItems));
+    localStorage.setItem('saved-items', JSON.stringify(saveItems)); // ** 
 };
 
 if (savedTodoList) {
@@ -79,3 +79,41 @@ if (savedTodoList) {
     createTodo(savedTodoList[i]);
   }
 }
+
+// OpenWeatherMap API
+const weatherSearch = function (position) {
+  // fetch(`https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={API key}`);
+  console.log(position);
+  const openWeatherRes = fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${position.latitude}&lon=${position.longitude}&appid=d00aad183fd60b5b8bae7f45c445edb2`);
+  console.log(openWeatherRes);
+}
+const accessToGeo = function (position) {
+  console.log(position);
+  const positionObj = {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude
+  }
+  weatherSearch(positionObj);
+}
+const askForLocation = function () {
+  navigator.geolocation.getCurrentPosition(accessToGeo, (err) => {
+    console.log(err);
+  });
+}
+//askForLocation();
+
+//#region  promiseTest
+const promiseTest = function () {
+  return new Promise((resolver, reject) => {
+    setTimeout(() => {
+      resolver(100);
+      // reject('error');
+    }, 2000); // 통신 2초 후 resolver(100)실행
+  });
+}
+
+// console.log(promiseTest()); // ** pending 2초 -> fulfilled 됨
+promiseTest().then((res) => { // ** then()을 쓰면 fulfilled 된 후 콜백함수 실행하겠다는 뜻
+  console.log(res);
+});
+//#endregion
