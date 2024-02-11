@@ -82,11 +82,21 @@ if (savedTodoList) {
 
 // OpenWeatherMap API
 const weatherSearch = function (position) {
-  // fetch(`https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={API key}`);
-  console.log(position);
-  const openWeatherRes = fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${position.latitude}&lon=${position.longitude}&appid=d00aad183fd60b5b8bae7f45c445edb2`);
-  console.log(openWeatherRes);
-}
+  // fetch(`https://api.openweathermap.org/data/3.0/weather?lat={lat}&lon={lon}&appid={API key}`);
+  // console.log(position);
+
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=d00aad183fd60b5b8bae7f45c445edb2`
+  ).then((res) => {
+    console.log(res);
+    return res.json(); // ** body, header가 존재하는 json 받아올 때 .json() 사용! body만 있으면 Json.Parse() 사용해도 됨
+  }).then((jsonData) => {
+    console.log(jsonData);
+    console.log(jsonData.name, jsonData.weather[0].description);
+  }).catch((err) => {
+    console.error(err);
+  })
+};
+
 const accessToGeo = function (position) {
   console.log(position);
   const positionObj = {
@@ -95,12 +105,14 @@ const accessToGeo = function (position) {
   }
   weatherSearch(positionObj);
 }
+
 const askForLocation = function () {
   navigator.geolocation.getCurrentPosition(accessToGeo, (err) => {
     console.log(err);
   });
 }
-//askForLocation();
+
+askForLocation();
 
 //#region  promiseTest
 const promiseTest = function () {
@@ -113,7 +125,7 @@ const promiseTest = function () {
 }
 
 // console.log(promiseTest()); // ** pending 2초 -> fulfilled 됨
-promiseTest().then((res) => { // ** then()을 쓰면 fulfilled 된 후 콜백함수 실행하겠다는 뜻
-  console.log(res);
-});
+// promiseTest().then((res) => { // ** then()을 쓰면 fulfilled 된 후 콜백함수 실행하겠다는 뜻
+//   console.log(res);
+// });
 //#endregion
