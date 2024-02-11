@@ -1,6 +1,7 @@
 const todoInput = document.querySelector("#todo-input");
 const todoList = document.querySelector("#todo-list");
 const savedTodoList = JSON.parse(localStorage.getItem('saved-items'));
+const savedWeatherData = JSON.parse(localStorage.getItem('saved-weather'));
 console.log(savedTodoList);
 
 const createTodo = function (storageData) {
@@ -96,6 +97,10 @@ const weatherDataActive = function ({ location, weather }) {
   console.log(locationNameTag);
   locationNameTag.textContent = location;
   document.body.style.backgroundImage = `url(images/${weather}.png)`;
+
+  if (!savedWeatherData || savedWeatherData.location !== location || savedWeatherData.weather !== weather) {
+    localStorage.setItem('saved-weather', JSON.stringify({ location, weather }));
+  }
 }
 
 
